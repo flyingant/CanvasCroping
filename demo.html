@@ -1,0 +1,28 @@
+<!DOCTYPE>
+<html>
+<head>
+    <title>Image cropping with canvas</title>
+    <script type="text/javascript" src="CanvasCrop.js"></script>
+</head>
+<body style="text-align: center;">
+<button type="button" onclick="CanvasCrop.enableCrop()">Enable Crop</button>
+<button type="button" onclick="CanvasCrop.disableCrop()">Disable Crop</button>
+<button type="button" onclick="CanvasCrop.crop()">Crop</button>
+
+<input id="file" type="file">
+
+<br/>
+<br/>
+
+<canvas id="canvas" width="800" height="600" style="border: 1px solid">
+
+</canvas>
+
+<script type="text/javascript">
+    CanvasCrop.initialize({
+        canvasId: "canvas",
+        fileId: "file"
+    });
+</script>
+</body>
+</html>
