@@ -19,6 +19,7 @@ var CanvasCrop = {
     initialize: function(options){
         var self = this;
         this.canvasId = options.canvasId;
+        this.targetCanvasId = options.targetCanvasId;
         this.fileId = options.fileId;
         var file = document.getElementById(this.fileId);
         file.addEventListener("change", function(event){
@@ -98,13 +99,11 @@ var CanvasCrop = {
         canvas.setAttribute("data-croping", "true");
         canvas.setAttribute("data-crop-area-x", event.offsetX - canvas.getAttribute("data-current-image-offset-left"));
         canvas.setAttribute("data-crop-area-y", event.offsetY - canvas.getAttribute("data-current-image-offset-top"));
-        console.log("Start Croping", canvas);
     },
 
     mouseUpHandle: function(event){
         var canvas = document.getElementById(event.target.id);
         canvas.setAttribute("data-croping", "false");
-        console.log("After Croping", canvas);
     },
 
     mouseMoveHandle: function(event){
@@ -153,17 +152,24 @@ var CanvasCrop = {
     },
 
     crop: function(){
-        var canvas = this.getCanvas();
+        var canvas = this.getCanvas(), targetCanvas;
         var cropArea ={
-            x: canvas.getAttribute("data-crop-area-x"),
-            y: canvas.getAttribute("data-crop-area-y"),
-            x1: canvas.getAttribute("data-crop-area-x1"),
-            y1: canvas.getAttribute("data-crop-area-y1")
+            x: Number(canvas.getAttribute("data-crop-area-x")),
+            y: Number(canvas.getAttribute("data-crop-area-y")),
+            x1: Number(canvas.getAttribute("data-crop-area-x1")),
+            y1: Number(canvas.getAttribute("data-crop-area-y1"))
         };
-        canvas.width = cropArea.x1;
-        canvas.height = cropArea.y1;
         
-        var ctx = canvas.getContext('2d');
+        if(this.targetCanvasId){
+            targetCanvas = document.getElementById(this.targetCanvasId);    
+        } else {
+            targetCanvas = canvas;    
+        }
+        
+        targetCanvas.width = cropArea.x1;
+        targetCanvas.height = cropArea.y1;
+        
+        var ctx = targetCanvas.getContext('2d');
         ctx.drawImage(this.getCurrentImage(), 
         cropArea.x, cropArea.y,
         cropArea.x1, cropArea.y1,
