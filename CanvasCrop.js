@@ -174,7 +174,14 @@ var CanvasCrop = {
         cropArea.x, cropArea.y,
         cropArea.x1, cropArea.y1,
         0, 0,
-        cropArea.x1, cropArea.y1)
+        cropArea.x1, cropArea.y1);
+        
+        // the code as following can help to get the size of the crop image
+        /*
+        var base64Image = targetCanvas.toDataURL().split("data:image/png;base64,")[1];
+        var blob2 = new Blob([atob(base64Image)],{type:"image/png"});
+        console.log("Size: ", blob2.size);
+        */
     },
     
     errorHandle: function(errorCode, callback){
